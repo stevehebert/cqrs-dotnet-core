@@ -2,8 +2,6 @@
 using cqrs.Messaging.Handling;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace cqrs_test.Messaging.Handling
@@ -93,13 +91,11 @@ namespace cqrs_test.Messaging.Handling
             eventDispatcher.DispatchMessage(new LoadEvent(guid));
 
             Assert.Equal(list.Count, 0);
-
         }
 
         [Fact]
         public void registering_and_triggering_enumerations_works()
         {
-            
             var list = new List<IEvent>();
             var guid1 = Guid.NewGuid();
             var guid2 = Guid.NewGuid();
@@ -111,7 +107,6 @@ namespace cqrs_test.Messaging.Handling
             Assert.Equal(list.Count, 2);
             Assert.Equal(list[0].SourceId, guid1);
             Assert.Equal(list[1].SourceId, guid2);
-
         }
 
     }
