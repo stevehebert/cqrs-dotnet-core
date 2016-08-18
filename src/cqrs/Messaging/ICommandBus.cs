@@ -9,5 +9,7 @@ namespace cqrs.Messaging
     {
         void Send(Envelope<ICommand> command);
         void Send(IEnumerable<Envelope<ICommand>> commands);
+
+        IBrokeredMessage BuildMessage(Envelope<ICommand> command);
     }
 }
