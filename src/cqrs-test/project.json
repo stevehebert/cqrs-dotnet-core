@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "xunit": "2.2.0-beta2-build3300",
+    "NetMQ": "4.0.0-rc5",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "cqrs": "1.0.0-*"
   },
