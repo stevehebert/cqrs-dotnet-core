@@ -4,7 +4,7 @@ using Xunit;
 
 namespace cqrs_test.SampleApp
 {
-    public class Class1
+    public class SampleAppCore
     {
         [Fact]
         public void Go()
