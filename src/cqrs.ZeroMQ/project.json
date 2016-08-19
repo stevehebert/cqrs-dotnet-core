@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "CoreCompat.EnterpriseLibrary.TransientFaultHandling": "6.0.1304-r3",
+    "cqrs": "1.0.0-*",
+    "NetMQ": "4.0.0-rc5",
+    "NETStandard.Library": "1.6.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

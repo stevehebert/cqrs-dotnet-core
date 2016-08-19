@@ -7,9 +7,9 @@ namespace cqrs.Messaging
 {
     public interface ICommandBus
     {
-        void Send(Envelope<ICommand> command);
-        void Send(IEnumerable<Envelope<ICommand>> commands);
+        void Send<TCommand>(Envelope<TCommand> command) where TCommand : ICommand;
+        void Send<TCommand>(IEnumerable<Envelope<TCommand>> commands) where TCommand : ICommand;
 
-        IBrokeredMessage BuildMessage(Envelope<ICommand> command);
+        IBrokeredMessage BuildMessage<TCommand>(Envelope<TCommand> command) where TCommand : ICommand;
     }
 }

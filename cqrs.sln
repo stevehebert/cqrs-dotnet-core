@@ -16,6 +16,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "cqrs-test", "src\cqrs-test\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{AEBB3FB2-14FD-46B9-85E2-AC226E842A44}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "cqrs.ZeroMQ", "src\cqrs.ZeroMQ\cqrs.ZeroMQ.xproj", "{B15AD13D-6F36-46F4-A4D3-A21316732041}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "cqrs-zeromq-test", "cqrs-zeromq-test\cqrs-zeromq-test.xproj", "{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{B2AF19A5-ADEA-4704-84D7-95F0A68413C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2AF19A5-ADEA-4704-84D7-95F0A68413C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2AF19A5-ADEA-4704-84D7-95F0A68413C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15AD13D-6F36-46F4-A4D3-A21316732041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15AD13D-6F36-46F4-A4D3-A21316732041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15AD13D-6F36-46F4-A4D3-A21316732041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15AD13D-6F36-46F4-A4D3-A21316732041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,5 +49,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{32D9B15B-6AA6-4123-AABA-27658A635328} = {97178638-A7FA-42D9-B2FE-6251FCB98FDA}
 		{B2AF19A5-ADEA-4704-84D7-95F0A68413C8} = {AEBB3FB2-14FD-46B9-85E2-AC226E842A44}
+		{B15AD13D-6F36-46F4-A4D3-A21316732041} = {97178638-A7FA-42D9-B2FE-6251FCB98FDA}
+		{DBED710E-C67D-4F77-A21B-4B4ABCCA5C23} = {AEBB3FB2-14FD-46B9-85E2-AC226E842A44}
 	EndGlobalSection
 EndGlobal
