@@ -1,9 +1,8 @@
-﻿using cqrs.Messaging;
-using NetMQ;
+﻿using NetMQ;
 using NetMQ.Sockets;
 using Xunit;
 
-namespace cqrs_test
+namespace cqrs_test.SampleApp
 {
     public class Class1
     {
