@@ -21,6 +21,7 @@ namespace cqrs.Messaging
 
         public void SendAsync(Func<IBrokeredMessage> messageFactory, Action successCallback, Action<Exception> exceptionCallback)
         {
+
             throw new NotImplementedException();
         }
     }
