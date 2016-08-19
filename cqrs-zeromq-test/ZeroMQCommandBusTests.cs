@@ -33,16 +33,13 @@ namespace cqrs_zeromq_test
             var bus = new ZeroMQCommandBus(messageSenderMock.Object, new StandardMetadataProvider(), serializer );
             
             var message = bus.BuildMessage(Envelope.Create(new NewItemCommand() { Name = "Hello" })) as ZeroMqMessage;
-
-
+            
             var content = message.Message.First.ConvertToString(ASCIIEncoding.UTF8);
-            var bareObject = serializer.Deserialize<ZeroMQCommandBus.ZeroMQMessageContent>( content);
+            var bareObject = serializer.Deserialize<ZeroMQCommandBus.ZeroMQMessageContent>(content);
 
             var body = serializer.Deserialize<NewItemCommand>(bareObject.Data);
 
             Assert.Equal(body.Name, "Hello");
-
-            Assert.NotNull(body);
         }
     }
 }
