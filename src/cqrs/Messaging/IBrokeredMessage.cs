@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace cqrs.Messaging
+﻿namespace cqrs.Messaging
 {
     public interface IBrokeredMessage
     {
+        string MessageId { get; }
+        string CorrelationId { get; }
+        string TraceId { get; }
+        object Payload { get; }
+
+
+        int DeliveryCount { get; set; }
     }
 }
