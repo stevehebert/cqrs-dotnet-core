@@ -6,7 +6,9 @@
     "System.Reflection.TypeExtensions": "4.1.0",
     "Newtonsoft.Json": "8.0.3",
     "System.Runtime.Serialization.Primitives": "4.1.1",
-    "System.Diagnostics.TraceSource": "4.0.0"
+    "System.Diagnostics.TraceSource": "4.0.0",
+    "System.Dynamic.Runtime": "4.0.11",
+    "Microsoft.CSharp": "4.0.1" 
   },
 
   "frameworks": {

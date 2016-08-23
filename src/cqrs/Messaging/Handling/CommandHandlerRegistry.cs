@@ -18,5 +18,7 @@
         {
             this._commandDispatcher.ProcessMessage(message.Payload as ICommand,  message);
         }
+
+        public int RegisteredHandlerCount => _commandDispatcher.HandlerCount;
     }
 }

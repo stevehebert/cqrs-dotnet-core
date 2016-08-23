@@ -1,44 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using cqrs.Messaging;
 using cqrs.Messaging.Handling;
 using NetMQ;
-using NetMQ.Sockets;
 
 namespace cqrs.ZeroMQ.Messaging
 {
-    public class ZeroMQMessageReceiver : IMessageReceiver<Msg>
-    {
-        private readonly ResponseSocket _responseSocket;
-
-        public ZeroMQMessageReceiver(IZeroMQConfig config)
-        {
-            _responseSocket = new ResponseSocket(config.ResponseSocket);
-        }
-        public void Start(Func<Msg, MessageReleaseAction> messageHandler)
-        {
-            Msg msg = new Msg();
-            _responseSocket.ReceiveReady += (sender, args) =>
-            {
-                args.Socket.Receive(ref msg);
- 
-                messageHandler(msg);
-            };
-        }
-
-        public void Stop()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ZeroMQCommandHandlerRegistry : CommandHandlerRegistry<Msg>
     {
         public ZeroMQCommandHandlerRegistry(IMessageReceiver<Msg> messageReceiver, ITextSerializer serializer, IDeliveryConfiguration deliveryConfiguration) : base(messageReceiver, serializer, deliveryConfiguration)
         {
+        }
+
+        public ZeroMQCommandHandlerRegistry(IZeroMQConfig config, ITextSerializer serializer,
+            IDeliveryConfiguration deliveryConfiguration)
+            : base(new ZeroMQMessageReceiver(config), serializer, deliveryConfiguration)
+        {
+            
         }
 
         protected override IBrokeredMessage TranslateIncomingMessage(Msg message)

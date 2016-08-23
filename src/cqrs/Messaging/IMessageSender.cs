@@ -8,7 +8,7 @@ namespace cqrs.Messaging
     /// <summary>
     /// Abstracts the behavior of sending a message.
     /// </summary>
-    public interface IMessageSender
+    public interface IMessageSender : IDisposable
     {
         void Send(IBrokeredMessage message);
 

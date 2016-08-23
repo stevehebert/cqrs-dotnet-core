@@ -38,5 +38,11 @@ namespace cqrs.Messaging
                 this.Send(message);
             }
         }
+
+        public void Dispose()
+        {
+            _requestSocket?.Dispose();
+            _requestSocket = null;
+        }
     }
 }

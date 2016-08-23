@@ -2,7 +2,7 @@
 
 namespace cqrs.Messaging
 {
-    public interface IMessageReceiver<T>
+    public interface IMessageReceiver<T> : IDisposable
     {
         void Start(Func<T, MessageReleaseAction> messageHandler);
 

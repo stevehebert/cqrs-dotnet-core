@@ -1,11 +1,12 @@
-﻿using cqrs.Serialization;
+﻿using System;
+using cqrs.Serialization;
 using System.Collections.Generic;
 
 namespace cqrs.Messaging
 {
-    public abstract class CommandBus : ICommandBus
+    public abstract class CommandBus : ICommandBus, IDisposable
     {
-        private readonly IMessageSender sender;
+        private IMessageSender sender;
         protected IMetadataProvider metadataProvider { get; private set; }
         protected ITextSerializer serializer { get; private set; }
 
@@ -32,5 +33,10 @@ namespace cqrs.Messaging
         }
 
         public abstract IBrokeredMessage BuildMessage<TCommand>(Envelope<TCommand> command) where TCommand : ICommand;
+        public void Dispose()
+        {
+            this.sender?.Dispose();
+            this.sender = null;
+        }
     }
 }
