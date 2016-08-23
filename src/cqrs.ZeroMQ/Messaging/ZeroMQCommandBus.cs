@@ -1,15 +1,21 @@
 ﻿using System;
-using cqrs.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using cqrs.Messaging;
+using cqrs.Serialization;
 using NetMQ;
 
-namespace cqrs.Messaging
+namespace cqrs.ZeroMQ.Messaging
 {
     public class ZeroMqMessage : IBrokeredMessage
     {
-        public NetMQMessage Message {get;set;}
+        public Msg Message {get;set;}
+        public string MessageId { get; set; }
+        public string CorrelationId { get; set; }
+        public string TraceId { get; set; }
+        public object Payload { get; set; }
+        public int DeliveryCount { get; set; }
     }
 
 
@@ -22,12 +28,14 @@ namespace cqrs.Messaging
             public IDictionary<String, String> Properties { get; set; }
         }
         public ZeroMQCommandBus(IMessageSender sender, IMetadataProvider metadataProvider, ITextSerializer serializer) : base(sender, metadataProvider, serializer)
-        {
-        }
+        { }
+
+        public ZeroMQCommandBus(IZeroMQConfig config, IMetadataProvider metadataProvider, ITextSerializer serializer) : base(new ZeroMQMessageSender(config), metadataProvider, serializer)
+        { }
 
         public override IBrokeredMessage BuildMessage<TCommand>(Envelope<TCommand> command)
         {
-            var message = new NetMQMessage(1);
+            var message = new Msg();
             using (var bodyWriter = new StringWriter())
             using (var writer = new StringWriter())
             {
@@ -38,15 +46,20 @@ namespace cqrs.Messaging
                     Properties = this.metadataProvider.GetMetadata(command.Body)
                 };
 
+                messageContent.Properties.Add("id", command.MessageId);
+                messageContent.Properties.Add("cor-id", command.CorrelationId);
+                
                 this.serializer.Serialize(writer, messageContent);
-                var bytArray = ASCIIEncoding.UTF8.GetBytes(writer.ToString());
-
-                message.Append(bytArray);
+                var bytArray = Encoding.UTF8.GetBytes(writer.ToString());
+                message.InitGC(bytArray, bytArray.Length);
             }
 
             return new ZeroMqMessage
             {
-                Message = message
+                Message = message,
+                Payload = command.Body,
+                MessageId = command.Body.Id.ToString(),
+                CorrelationId = string.IsNullOrEmpty(command.CorrelationId) ? Guid.NewGuid().ToString() : command.CorrelationId
             };
         }
     }

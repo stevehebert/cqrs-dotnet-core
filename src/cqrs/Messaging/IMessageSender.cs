@@ -10,24 +10,12 @@ namespace cqrs.Messaging
     /// </summary>
     public interface IMessageSender
     {
-        /// <summary>
-        /// Sends the specified message synchronously.
-        /// </summary>
-        void Send(Func<IBrokeredMessage> messageFactory);
+        void Send(IBrokeredMessage message);
 
         /// <summary>
-        /// Sends the specified message asynchronously.
+        /// Sends a batch of messages.
         /// </summary>
-        void SendAsync(Func<IBrokeredMessage> messageFactory);
-
-        /// <summary>
-        /// Sends the specified message asynchronously.
-        /// </summary>
-        void SendAsync(Func<IBrokeredMessage> messageFactory, Action successCallback, Action<Exception> exceptionCallback);
-
-        /// <summary>
-        /// Notifies that the sender is retrying due to a transient fault.
-        /// </summary>
-        event EventHandler Retrying;
+        void Send(IEnumerable<IBrokeredMessage> messages);
+        
     }
 }

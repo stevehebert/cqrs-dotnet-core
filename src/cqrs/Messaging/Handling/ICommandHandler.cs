@@ -1,9 +1,20 @@
-﻿namespace cqrs.Messaging.Handling
-{
-    public interface ICommandHandler {}
+﻿using System;
 
-    public interface ICommandHandler<T> : ICommandHandler where T: ICommand
+namespace cqrs.Messaging.Handling
+{
+    public interface ICommandHandler
     {
-        void Handle(T command);
+        void Handle(object command);
+    }
+
+    public abstract class BaseCommandHandler<T> : ICommandHandler where T : ICommand
+    {
+        public void Handle(object command)
+        {
+            TypedHandle((T) command);
+        }
+
+        public abstract void TypedHandle(T command);
     }
 }
+

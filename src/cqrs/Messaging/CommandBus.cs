@@ -20,7 +20,7 @@ namespace cqrs.Messaging
         /// </summary>
         public void Send<TCommand>(Envelope<TCommand> command) where TCommand : ICommand
         {
-            this.sender.Send(() => BuildMessage(command));
+            this.sender.Send(BuildMessage(command));
         }
 
         public void Send<TCommand>(IEnumerable<Envelope<TCommand>> commands) where TCommand : ICommand
@@ -31,6 +31,6 @@ namespace cqrs.Messaging
             }
         }
 
-        abstract public IBrokeredMessage BuildMessage<TCommand>(Envelope<TCommand> command) where TCommand : ICommand;
+        public abstract IBrokeredMessage BuildMessage<TCommand>(Envelope<TCommand> command) where TCommand : ICommand;
     }
 }

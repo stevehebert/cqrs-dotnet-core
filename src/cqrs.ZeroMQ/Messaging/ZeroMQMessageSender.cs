@@ -2,27 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using cqrs.ZeroMQ.Messaging;
+using NetMQ;
+using NetMQ.Sockets;
 
 namespace cqrs.Messaging
 {
+    public interface IZeroMQConfig
+    {
+        string RequestSocket { get; }
+        string ResponseSocket { get; }
+    }
     public class ZeroMQMessageSender : IMessageSender
     {
-        public event EventHandler Retrying;
+        private RequestSocket _requestSocket;
 
-        public void Send(Func<IBrokeredMessage> messageFactory)
+        public ZeroMQMessageSender(IZeroMQConfig config)
         {
-            throw new NotImplementedException();
+            _requestSocket = new RequestSocket(config.RequestSocket);
+        }
+       
+
+        public void Send(IBrokeredMessage message)
+        {
+            var zero = message as ZeroMqMessage;
+            var msg = zero.Message;
+
+            _requestSocket.TrySend(ref msg, TimeSpan.Zero, false);
         }
 
-        public void SendAsync(Func<IBrokeredMessage> messageFactory)
+        public void Send(IEnumerable<IBrokeredMessage> messages)
         {
-            // throw new NotImplementedException();
-        }
-
-        public void SendAsync(Func<IBrokeredMessage> messageFactory, Action successCallback, Action<Exception> exceptionCallback)
-        {
-
-            throw new NotImplementedException();
+            foreach (var message in messages)
+            {
+                this.Send(message);
+            }
         }
     }
 }
