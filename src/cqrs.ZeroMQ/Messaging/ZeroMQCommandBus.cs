@@ -19,7 +19,6 @@ namespace cqrs.ZeroMQ.Messaging
     }
 
 
-
     public class ZeroMQCommandBus : CommandBus
     {
         public class ZeroMQMessageContent

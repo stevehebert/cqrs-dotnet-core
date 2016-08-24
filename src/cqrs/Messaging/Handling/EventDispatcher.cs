@@ -8,13 +8,13 @@ namespace cqrs.Messaging.Handling
 {
     public class EventDispatcher
     {
-        private Dictionary<Type, List<Tuple<Type, Action<Envelope>>>> handlersByEventType;
-        private Dictionary<Type, Action<IEvent, string, string, string>> dispatchersByEventType;
+        private Dictionary<Type, List<Tuple<Type, Action<Envelope>>>> _handlersByEventType;
+        private Dictionary<Type, Action<IEvent, string, string, string>> _dispatchersByEventType;
 
         public EventDispatcher()
         {
-            this.handlersByEventType = new Dictionary<Type, List<Tuple<Type, Action<Envelope>>>>();
-            this.dispatchersByEventType = new Dictionary<Type, Action<IEvent, string, string, string>>();
+            this._handlersByEventType = new Dictionary<Type, List<Tuple<Type, Action<Envelope>>>>();
+            this._dispatchersByEventType = new Dictionary<Type, Action<IEvent, string, string, string>>();
         }
 
         public EventDispatcher(IEnumerable<IEventHandler> handlers)
@@ -35,16 +35,16 @@ namespace cqrs.Messaging.Handling
                 var envelopeType = typeof(Envelope<>).MakeGenericType(invocationTuple.Item1);
 
                 List<Tuple<Type, Action<Envelope>>> invocations;
-                if (!this.handlersByEventType.TryGetValue(invocationTuple.Item1, out invocations))
+                if (!this._handlersByEventType.TryGetValue(invocationTuple.Item1, out invocations))
                 {
                     invocations = new List<Tuple<Type, Action<Envelope>>>();
-                    this.handlersByEventType[invocationTuple.Item1] = invocations;
+                    this._handlersByEventType[invocationTuple.Item1] = invocations;
                 }
                 invocations.Add(new Tuple<Type, Action<Envelope>>(handlerType, invocationTuple.Item2));
 
-                if (!this.dispatchersByEventType.ContainsKey(invocationTuple.Item1))
+                if (!this._dispatchersByEventType.ContainsKey(invocationTuple.Item1))
                 {
-                    this.dispatchersByEventType[invocationTuple.Item1] = this.BuildDispatchInvocation(invocationTuple.Item1);
+                    this._dispatchersByEventType[invocationTuple.Item1] = this.BuildDispatchInvocation(invocationTuple.Item1);
                 }
             }
         }
@@ -65,12 +65,12 @@ namespace cqrs.Messaging.Handling
         public void DispatchMessage(IEvent @event, string messageId, string correlationId, string traceIdentifier)
         {
             Action<IEvent, string, string, string> dispatch;
-            if (this.dispatchersByEventType.TryGetValue(@event.GetType(), out dispatch))
+            if (this._dispatchersByEventType.TryGetValue(@event.GetType(), out dispatch))
             {
                 dispatch(@event, messageId, correlationId, traceIdentifier);
             }
             // Invoke also the generic handlers that have registered to handle IEvent directly.
-            if (this.dispatchersByEventType.TryGetValue(typeof(IEvent), out dispatch))
+            if (this._dispatchersByEventType.TryGetValue(typeof(IEvent), out dispatch))
             {
                 dispatch(@event, messageId, correlationId, traceIdentifier);
             }
@@ -84,7 +84,7 @@ namespace cqrs.Messaging.Handling
             envelope.CorrelationId = correlationId;
 
             List<Tuple<Type, Action<Envelope>>> handlers;
-            if (this.handlersByEventType.TryGetValue(typeof(T), out handlers))
+            if (this._handlersByEventType.TryGetValue(typeof(T), out handlers))
             {
                 foreach (var handler in handlers)
                 {

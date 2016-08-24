@@ -3,15 +3,21 @@ using cqrs.Serialization;
 using Moq;
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
 using System.Threading;
+using cqrs.EventSourcing;
 using cqrs.Messaging.Handling;
 using cqrs.ZeroMQ.Messaging;
 using Xunit;
 
 namespace cqrs_zeromq_test
 {
+    public class ZeroMQEventBusTests
+    {
+        public class NewItemEvent : IVersionedEvent
+        {
+            
+        }
+    }
     public class ZeroMQCommandBusTests
     {
         public class NewItemCommand : ICommand
